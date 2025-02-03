@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestograma</title>
+    <script src="gestograma.js" defer></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        input, button {
+            margin: 10px;
+            padding: 8px;
+            font-size: 16px;
+        }
+        #resultado {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Gestograma</h2>
+    
+    <label for="fum">Fecha de Última Menstruación (FUM):</label>
+    <input type="date" id="fum">
+    
+    <br>
+    
+    <label for="fechaBuscar">Fecha a buscar:</label>
+    <input type="date" id="fechaBuscar">
+    
+    <br>
+    
+    <h3>Ajustar por Ecografía</h3>
+    
+    <label for="fechaEco">Fecha de Ecografía:</label>
+    <input type="date" id="fechaEco">
+
+    <br>
+
+    <label for="semanasEco">Semanas:</label>
+    <input type="number" id="semanasEco" min="0" max="42">
+
+    <label for="diasEco">Días:</label>
+    <input type="number" id="diasEco" min="0" max="6">
+    
+    <br>
+
+    <button onclick="calcularGestacion()">Calcular</button>
+
+    <div id="resultado"></div>
+
+</body>
+</html>
