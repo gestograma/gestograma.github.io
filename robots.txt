@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://gestograma.github.io/sitemap.xml
