@@ -1,81 +1,94 @@
-# Gestograma Pro — gestograma.github.io
+# Gestograma Pro — Calculadora de Edad Gestacional de Alta Precisión
 
-**Calculadora de Edad Gestacional de Alta Precisión**
+Calculadora médica de edad gestacional por FUM o ecografía. Precisión ±1 día, con Fecha Probable de Parto (FPP), trimestre, línea de tiempo y seguimiento fetal semana a semana.
 
-Live: **https://gestograma.github.io/**
+**Demo en vivo:** https://gestograma.github.io/
 
-Herramienta médica precisa, rápida y fácil de usar. Calcula edad gestacional por FUM o por ecografía, fecha probable de parto (FPP), concepción, trimestre, días restantes y progreso del embarazo. Sin errores de zona horaria.
+![Gestograma Pro](og-image.png)
 
-> Hecho para Uruguay / LATAM. Funciona 100% en el navegador, sin backend.
+## ✨ Características
 
-### 🚀 Demo
-Sube `index.html` a tu repo `gestograma.github.io` y queda online automático con GitHub Pages.
+- **Cálculo por FUM y por ecografía** — con validación de fechas
+- **Precisión ±1 día** — cálculo exacto de semanas y días
+- **Fecha Probable de Parto (FPP)** automática
+- **Trimestre y progreso** visual del embarazo
+- **Desarrollo fetal semana a semana** — peso, talla y descripción clínica (4 a 42 semanas)
+- **Modo oscuro** — detecta preferencia del sistema y guarda en localStorage
+- **PWA-ready** — favicons 16/32/180/192/512
+- **SEO optimizado** — Open Graph para WhatsApp, Twitter Cards, JSON-LD, robots.txt y sitemap.xml
+- **100% estático** — funciona en GitHub Pages sin backend
 
-### ✨ Qué hace
+## 🚀 Uso
 
-- **Doble entrada:** FUM o Fecha de Ecografía + EG de esa eco (ej: 8s 3d)
-- **Corrección automática:** Si hay eco de 1er trimestre, recalcula FUM corregida = `Fecha Eco - (semanas*7 + días)` — estándar ACOG
-- **Cálculos:** FPP = FUM + 280 días (Naegele), Concepción = FUM + 14 días, EG exacta en semanas+días, días totales, días restantes, % completado (0-40s)
-- **Clasificación:** Pretérmino, Término precoz 37-38+6, Término completo 39-40+6, Tardío 41-41+6, Postérmino
-- **Visual:** Barra de progreso, timeline de hitos (implantación, fin 1er trim, viabilidad 24s, término 37s, FPP 40s), y bloque "¿Qué pasa esta semana?" con talla/peso de referencia
-- **Acciones:** Copiar resultado y Compartir por WhatsApp
+1. Ingresá la Fecha de Última Menstruación (FUM) **o** la fecha de ecografía
+2. La calculadora muestra automáticamente:
+   - Edad gestacional en semanas + días
+   - FPP
+   - Trimestre actual
+   - Barra de progreso
+   - Tarjeta fetal con peso, talla y descripción
 
-### 🎯 Por qué es más preciso
+No se guarda ningún dato del paciente — todo se calcula en el navegador.
 
-La mayoría de los gestogramas usan `new Date("2024-01-01")` que en GMT-3 te resta 1 día. Este usa:
+## 🛠️ Tecnologías
 
-```js
-parseLocalDate(str) => new Date(str + 'T00:00:00')
-diffDays(a,b) => floor((b-a)/86400000)
-addDays(date, n) => date.setDate(date.getDate()+n)
+- React + TailwindCSS
+- GitHub Pages
+- Vanilla JS para modo oscuro y SEO dinámico
+
+## 📁 Estructura del proyecto
+
+```
+gestograma.github.io/
+├── index.html              # App principal (gestograma intacto + SEO + dark mode)
+├── og-image.png            # 1200x630 para WhatsApp / Facebook
+├── logo-transparente.png   # Logo completo con texto
+├── icon-only.png           # Solo icono circular
+├── favicon-16.png
+├── favicon-32.png
+├── favicon-180.png
+├── favicon-192.png
+├── favicon-512.png
+├── robots.txt
+├── sitemap.xml
+├── README.md
+└── LICENSE
 ```
 
-Resultado: precisión ±1 día, sin shift por UTC.
+## 🌙 Modo oscuro
 
-### 📐 Fórmulas
+Implementado sin modificar la lógica del gestograma:
 
-```
-FUMc = FechaEco - (SemanasEco*7 + DiasEco)
-FPP = FUMc + 280
-Concepción = FUMc + 14
-EG_dias = FechaEvaluar - FUMc
-EG = floor(EG_dias/7) sem + EG_dias%7 días
-Restantes = 280 - EG_dias
-Trimestre: 1º <14s, 2º 14s-27s6d, 3º >=28s
-Rango normal parto: FPP-21d a FPP+14d (37s-42s)
-```
+- Usa `html.dark` con variables CSS
+- Detecta `prefers-color-scheme: dark`
+- Botón flotante 🌙/☀️ arriba a la derecha
+- Guarda preferencia en `localStorage.theme`
 
-### 📁 Deploy en GitHub Pages
+## 🔍 SEO - Por qué Google no mostraba el sitio
 
-Tu dominio `https://gestograma.github.io/` es un User Pages site.
+Errores corregidos en esta versión:
 
-1. Crea repo en GitHub llamado exactamente `gestograma.github.io`
-2. Sube estos 2 archivos a la rama `main` en la raíz:
-   - `index.html` (es el gestograma-pro.html que te generé)
-   - `README.md` (este archivo)
-3. Ve a Settings > Pages > Source: Deploy from branch `main` / root
-4. Listo. En 1-2 min queda online.
+1. `<head` sin cierre `>` → impedía que Google leyera los meta tags
+2. Doble `<title>` y `lang="en"` en contenido español
+3. `og-image.png` inexistente → GitHub mostraba su logo genérico
+4. Faltaban favicons, robots.txt, sitemap.xml y datos estructurados JSON-LD
 
-No necesita build. Es un solo HTML con CSS y JS inline.
+**Para indexar en Google:**
 
-### 🔍 SEO y Analytics preservado
+1. Subir todo a la rama `main`
+2. Verificar en https://search.google.com/search-console
+3. Enviar sitemap: `https://gestograma.github.io/sitemap.xml`
+4. Solicitar indexación en Inspección de URLs
+5. El preview de WhatsApp se puede forzar en: https://developers.facebook.com/tools/debug/
 
-Se mantiene intacto lo que ya tenías:
+## 📄 Licencia
 
-- `gtag.js` ID `G-6H3NFY3YE2`
-- `google-site-verification` `LCGPDSlNvAWgG8nmTtlGldRpRumg4z9EgABCd0Uh0HY`
-- metas `description`, `keywords`, `og:title`, `twitter:card`
+MIT — ver archivo [LICENSE](LICENSE)
 
-### 🛠️ Stack
+## ⚕️ Disclaimer médico
 
-HTML5 + CSS3 (variables, Grid) + Vanilla JS (0 dependencias) + Poppins
+Esta herramienta es de apoyo informativo y no reemplaza la valoración médica profesional. Siempre confirmar con ecografía y criterio clínico.
 
-### ⚕️ Disclaimer
+---
 
-Herramienta de apoyo informativo. No sustituye criterio médico. La edad gestacional definitiva debe correlacionarse con clínica y ecografía por profesional de salud.
-
-### 👤 Autor
-
-Miguel Alves — @m.alvcig — Montevideo, UY
-
-Licencia MIT.
+Hecho con ❤️ para uso obstétrico en Uruguay — es_UY
